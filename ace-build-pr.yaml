@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: ace-build-pipeline-
+  labels:
+    tekton.dev/pipeline: ace-build-pipeline
+spec:
+  pipelineRef:
+    name: ace-build-pipeline
+  serviceAccountName: ace-pipeline
+  params:
+    - name: git_url
+      value: https://github.com/jtarte/ace-pipeline-sample
+    - name: branch
+      value: main
+    - name: image
+      value: image-registry.openshift-image-registry.svc:5000/ace-test/simpleaceapp
+    - name: tag
+      value: "1.0"
+  workspaces:
+    - name: workspace 
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce # access mode may affect how you can use this volume in parallel tasks
+          resources:
+            requests:
+              storage: 1Gi
+  

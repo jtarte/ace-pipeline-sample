@@ -1,0 +1,6 @@
+ind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: ace-pipeline
+secrets:
+  - name: ibm-entitlement-key
